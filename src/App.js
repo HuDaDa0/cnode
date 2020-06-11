@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Button } from 'antd';
+import routes from './router/index';
+
+function App(props) {
+    console.log(useSelector(state => state));
+    return (
+        <div className="App">
+            <Switch>
+                {
+                    routes.map((item, index) => {
+                        return (
+                            <Route 
+                                key={index} 
+                                path={item.path}
+                                exact={item.exact}
+                                render={(props)=>{
+                                    return item.render(props);
+                                }}
+                            />
+                        )
+                    })
+                }
+            </Switch>
+            <Button type="primary">Button</Button>
+        </div>
+    );
 }
 
 export default App;
